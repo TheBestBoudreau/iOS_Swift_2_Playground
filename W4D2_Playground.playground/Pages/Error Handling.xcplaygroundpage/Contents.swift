@@ -53,25 +53,48 @@ catch let error {
  - Experiment:
  Create a Human class that has a name and age property. Also, create an initializer for this class to set its initial properties.
  */
-
+class Human{
+    var name : String
+    var age : Int
+    
+    init(name: String , age : Int) throws {
+        self.name = name
+        self.age = age
+        if (self.name == ""){
+            throw HumanErrors.noName
+        }
+        if (self.age < 0){
+            throw HumanErrors.noAge
+        }
+    }
+}
 
 /*:
  - Experiment:
  Create your own errors that throw when the name provided is empty or if the age is invalid. Go back and update the Human's initializer to throw an error when the data passed in is invalid.
  */
-
+enum HumanErrors : Error
+case noName
+case noAge
 
 /*:
  - Experiment:
  Now you can test your new Human class and surround it around the do-catch blocks.
  */
+do {
+    let human = try Human (name: "Raymond", age: 46)
+}
+catch let error {
+    print("Some error")
+}
+
 
 
 /*:
  - Experiment:
  Test your Human class again but don't surround it with a do-catch block and use `try?` instead. What do you notice? (What is the value of the new human when an error is thrown?)
  */
-
+let anotherHuman = try? Human (name: "Karen", age: 2)
 
 /*:
  - Experiment:
@@ -81,6 +104,15 @@ catch let error {
  */
 let data = "{\"firstName\": \"Bob\", \"lastName\": \"Doe\", \"vehicles\": [\"car\", \"motorcycle\", \"train\"]}".data(using: .utf8)!
 
+var json: [String, Any]
+do{
+    json = try JSONSerialization.jsonObject(with: data, options: option []) as! [String , Any]
+}catch let error{
+    print("Error : \(error.localizedDescription)")
+}
+for (key,value) in json {
+    print("\(key): \(value)")
+}
 
 /*:
  - Callout(Challenge):
@@ -102,6 +134,33 @@ let email: String? = "user1@lighthouselabs.ca"
 //let email: String? = "user1@lighthouselabs.ca"
 
 
+enum blankText : Error {
+    case userNameEmpty
+    case passwordEmpty
+    case emailEmpty
+}
+
+
+func checkEmptyFields() throws {
+    if let username = username {
+        print(username)
+    }else{
+        throw blankText.userNameEmpty
+    }
+    if let password = password{
+        print(password)
+        
+    }else{
+        throw blankText.passwordEmpty
+    }
+    if let email = email {
+        print (email)
+    }else{
+        throw blankText.emailEmpty
+    }
+}
+
+try? checkEmptyFields()
 /*:
  - Callout(Challenge):
  Given the following HondaDealership class, finish it off by implementing a function and testing it. Write a function that sells off a chosen car for the price.
@@ -116,8 +175,34 @@ class HondaDealership{
                             "CRV" : (price: 7000, count: 9),
                             "Prelude" : (price: 9000, count: 2)]
   
-  
+    enum carError : Error{
+        case invalidModel
+        case noMoney
+        case notEnoughCars
+    }
+    
+    func sellCar(model : String, offeredPrice: Int) throws{
+        if (model != "Civic") || (model != "CRV") || (model != "Prelude"){
+            throw carError.invalidModel
+        }
+        if ((model == "Civic") && (availableCarSupply["Civic"]! .price < 5000)) || ((model == "CRV") && (availableCarSupply["CRV"])! .price < 7000)) || ((model == "Prelude") && (availableCarSupply["Prelude"]! .price <9000)){
+            throw carError.noMoney
+        }
+        if ((model == "Civic") && (availableCarSupply["Civic"]!.count == 0)) || ((model == "CRV") && (availableCarSupply["CRV"]!.count == 0)) || ((model == "Prelude") && (availableCarSupply["Prelude"]!.count == 0)){
+            throw carError.notEnoughCars
+        }
+    }
   
 }
+
+let dealerShip = HondaDealership()
+do{
+    try dealerShip.sellCar(model: "Ford", offeredPrice: 12000)
+}
+catch let error {
+    print("Theres been an error : \(error)")
+}
+
+
 
 //: [Next](@next)

@@ -30,6 +30,18 @@ default:
  - case (let x, let y) where x == y
  */
 
+switch diceRoll {
+case (_,1):
+    print("Somethign")
+case (2,_):
+    print("Something")
+case (1...3, 1...3):
+    print("Something")
+case(let x, let y) where x==y:
+    print("Something")
+default:
+    print ("None of these matter")
+}
 
 /*:
  - Callout(Challenge):
@@ -40,6 +52,22 @@ default:
  - Halloween Day - Oct 31
  - Otherwise, indiciate the given day is not a holiday
  */
+
+let myBirthday = (month : "Aug", day : 26)
+
+switch myBirthday{
+case ("Dec", 25):
+    print("Christmas")
+case ("Jan",1):
+    print("New Years")
+case ("Feb",14):
+    print("Valentines")
+case ("Oct", 31):
+    print("Halloween")
+default:
+    print("Today might be my Birthday")
+    
+    }
 
 
 /*:
@@ -54,6 +82,21 @@ default:
  - point is inside the blue outlined box
  - point is outside the blue outlined box
  */
+let somePoint = (x : 2 , y : 3)
+
+switch somePoint{
+case ( x: _ y : 0):
+    print("The point is on the x axis")
+case (x : 0 y : _):
+    print("The point is on the y axis")
+case (x : -2...2 y : -2...2):
+    print("The point is inside the box")
+case let (x,y), where (x <-2 || x > 2) && (y <-2 || y>2):
+    print("The point is outside the box")
+default:
+    print("You're in the boonies")
+}
+
 
 
 //: [Next](@next)

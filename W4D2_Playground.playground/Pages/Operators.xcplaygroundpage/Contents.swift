@@ -45,8 +45,16 @@ let combinedValues = "abc" + 123
  - Experiment:
  Use the '*' operator to multiply a String and an Int. This returns a new String and repeats the given String the number of times delcared by the Int. ie: "abc" * 3 = "abcabcabc"
  */
+func * (text : String , num : Int)-> String{
+    var multiString = ""
+    
+    for _ in 1...num{
+        multiString += text
+    }
+    return multiString
+}
 
-
+let multipliedTest = "Hello" * 4
 /*:
  - Experiment:
  You can also overload the operators within an extension so it only affects this type. Add your own overload operators and you can even change the behaviour of existing ones. A `static` keyword is required for the functions and lie within the extension.
@@ -57,11 +65,11 @@ let combinedValues = "abc" + 123
  */
 extension Int {
   
-  // Comment this function in to try it!
-  //    static func + (left: Int, right: Int) -> Int{
-  //
-  //        return left - right
-  //    }
+//   Comment this function in to try it!
+      static func + (left: Int, right: Int) -> Int{
+  
+          return left - right
+      }
 }
 
 
@@ -86,7 +94,13 @@ var incrementTwo = incrementOne+++
  - Experiment:
  Create your own custom operator using the square root symbol here: √
  */
+infix operator √√
+infix func √√ (number : Int)-> Int {
+    return number * 7
+}
 
+var test = 100
+var testAnswer = test√√
 
 /*:
  ### Swift Operators Guidelines
@@ -99,7 +113,10 @@ var incrementTwo = incrementOne+++
  - Callout(Challenge):
  When we have percentage values, we tend to convert them into their decimal form before doing any arithmetic to them. Create an operator with the '%' that will be a convenient operator to convert Int values into a usable percentage value. ie: 10% = 0.1
  */
-
+postfix operator %
+postfix func % (num : Int)->Double{
+    return Double(num) / 100.0
+}
 
 /*:
  - Callout(Challenge):
@@ -108,6 +125,32 @@ var incrementTwo = incrementOne+++
  For example, [1,2] + [3,4] = [4,6]. If the array count size are not the same, then return nil
  */
 
+var firstArray = [1,2,3,4,5]
+var secondArray = [6,7,8,8,9]
+
+func + (array1 : [Int] , array2 : [Int])-> [Int]?{
+    
+    var resultArray: [Int] = []
+    
+    if array1.count == array2.count {
+        for index in 0..<array1.count{
+            
+            resultArray.append(array1[index] + array2[index])
+            
+        }
+        return resultArray
+        
+        
+    }else{
+        return nil
+        
+    }
+}
+
+var result = firstArray + secondArray
+print(result)
+
+//firstArray +
 
 
 //: [Next](@next)

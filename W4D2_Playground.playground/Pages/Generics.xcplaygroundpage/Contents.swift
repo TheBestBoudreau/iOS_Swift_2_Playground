@@ -34,7 +34,13 @@ printMyTwoNumbers(num1: "three", num2: "four")
  Now you try! Write a generic function that takes in two parameters and multiply their value together and print the result. (Hint: You might run into an error after finishing. Continue to the next experiment to find out why!)
  */
 
+func multiplyTwoParameters<T: Numeric>( _ something1 : T , _ something2: T) -> T{
+    return something1 * something2
+    }
 
+multiplyTwoParameters(10, 10)
+multiplyTwoParameters(12.3, 1234.2)
+multiplyTwoParameters("Hello", "Hello Again")
 /*:
  - Experiment:
  You might have run into error in the console regarding the multiplication operator can only be applied to numbered parameters. This makes sense as multiplying two Strings together doesn't make sense. So, we want to only take in variable types that *can* use the multiplication operator. In this case, we can limit the element type to types that conform to the `Numeric` protocol like below.
@@ -43,13 +49,14 @@ printMyTwoNumbers(num1: "three", num2: "four")
 func multiply<Element: Numeric>(num1: Element, num2: Element) {
   
 }
-
+ 1qa
 
 /*:
  - Experiment:
  Update your multiplication function and test it! Try using different variable types to see what works and what doesn't.
  */
-
+multiplyTwoParameters("thing1", "thing2")
+multiplyTwoParameters(32, 10)
 
 /*:
  - Experiment:
@@ -59,7 +66,15 @@ func multiply<Element: Numeric>(num1: Element, num2: Element) {
  - Note:
  For this experiment, refrain from using the array method `indexOf`. Also the protocol `Equatable` might be useful here. Search it up to see what it's about.
  */
-
+var someArr = [1,2,3,4,5,6]
+func someFunc<T:Equatable>(arrayofStuff : [T] ,searchArray : T) -> Int? {
+    for (index, generic) in arrayofStuff.enumerated(){
+        if generic == searchArray{
+            return index
+        }
+    }
+    return nil
+}
 
 
 /*:
@@ -75,7 +90,16 @@ func multiply<Element: Numeric>(num1: Element, num2: Element) {
  - dequeue: remove an item from the queue, and return the removed element
  */
 
-
+class Line<T>{
+    var people : [T]
+    func enqueue(person: T){
+        people.append(people)
+    }
+    
+    func dequeue() -> T{
+        return people.removeLast()
+    }
+}
 
 //: [Next](@next)
 
